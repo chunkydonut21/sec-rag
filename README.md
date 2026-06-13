@@ -19,15 +19,15 @@ SEC.gov:
 
 ![Summary scorecard and citations](docs/screenshot-3.png)
 
-This repo is built in phases. **Phase 1 (this milestone) is a working vertical
-slice:** EDGAR ingestion → sectioning → chunking → embeddings → pgvector →
-reranked retrieval with citations. The LangChain agent, market-data/calculator
-tools, advice guardrail, eval harness, observability, and frontend land in later
-phases.
+A full agentic RAG stack: EDGAR ingestion → sectioning → chunking → Voyage
+embeddings → pgvector retrieval with citations, wrapped in a Claude tool-calling
+agent (filing retrieval + live market data + calculator) with an advice
+guardrail, an LLM-as-judge eval harness, per-call observability, and a Next.js
+chat UI — all dockerized.
 
 ---
 
-## Architecture (Phase 1)
+## Architecture
 
 ```
                 ┌──────────────┐
@@ -66,7 +66,7 @@ phases.
 | `app/pipeline.py` | Orchestrates ingestion end-to-end |
 | `app/api/routes.py` | FastAPI endpoints |
 
-### The agent (Phase 2)
+### The agent
 
 `POST /query` runs a Claude tool-calling agent (`app/agent/graph.py`) that decides
 which tools to call, reasons over the results, and writes a cited answer:
@@ -213,7 +213,7 @@ All settings live in `app/config.py` and are overridable via environment / `.env
 
 ---
 
-## Evaluation (Phase 4)
+## Evaluation
 
 A small LLM-as-judge harness (`app/eval/`) scores the system on a hand-written
 test set (`app/eval/dataset.py`) of question/expected-point pairs over known
@@ -243,7 +243,7 @@ breakdown with the judge's reasoning.
 
 ---
 
-## Observability (Phase 5)
+## Observability
 
 Every Claude call (agent turns *and* eval-judge calls) and every tool call is
 recorded in-process (`app/observability.py`): tokens, cost (from a per-model
