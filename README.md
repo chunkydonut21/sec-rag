@@ -3,6 +3,14 @@
 Query and analyze SEC filings (10-K, 10-Q, 8-K) in plain language, with cited,
 grounded answers. **Informational only — not investment advice.**
 
+## Screenshots
+
+<!-- Save your screenshots into docs/ as ui-chat.png and ui-citations.png. -->
+
+![Chat UI — the agent streams its tool steps, then a cited, markdown-formatted answer](docs/ui-chat.png)
+
+![Clickable citations linked to the source filing on SEC.gov](docs/ui-citations.png)
+
 This repo is built in phases. **Phase 1 (this milestone) is a working vertical
 slice:** EDGAR ingestion → sectioning → chunking → embeddings → pgvector →
 reranked retrieval with citations. The LangChain agent, market-data/calculator
