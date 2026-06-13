@@ -278,14 +278,3 @@ So after any `/query` you can see exactly what it cost and where the time went.
 hosted traces for free by setting `LANGSMITH_TRACING=true` and
 `LANGSMITH_API_KEY=...` in the environment; LangChain auto-exports traces with no
 code change.
-
----
-
-## Roadmap
-
-- [x] **Phase 1** — EDGAR ingest → chunk → embed → pgvector → retrieval with citations
-- [x] **Phase 2** — LangChain tool-calling agent (retrieve / market-data / calculator), SSE streaming answer
-- [x] **Phase 3** — buy/sell advice guardrail (baked into the agent system prompt; hardened later)
-- [x] **Phase 4** — eval harness (retrieval relevance + faithfulness + correctness + guardrail, LLM-as-judge)
-- [x] **Phase 5** — observability (per LLM/tool call: tokens, cost, latency; optional LangSmith)
-- [x] **Phase 6** — Next.js chat UI (streams agent steps + answer, clickable citations) + Docker polish
