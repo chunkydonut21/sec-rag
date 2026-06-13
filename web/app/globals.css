@@ -1,0 +1,363 @@
+:root {
+  --bg: #0b0f14;
+  --panel: #121821;
+  --panel-2: #0e141c;
+  --border: #1f2a37;
+  --text: #e6edf3;
+  --muted: #8b98a5;
+  --accent: #2f81f7;
+  --accent-soft: #18324f;
+  --good: #2ea043;
+  --warn: #d29922;
+  --danger: #f85149;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 20px 120px;
+}
+
+header.app {
+  margin-bottom: 18px;
+}
+header.app h1 {
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+header.app .disclaimer {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  color: var(--text);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  outline: none;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+button {
+  cursor: pointer;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+button:hover {
+  filter: brightness(1.08);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button.ghost {
+  background: var(--panel-2);
+  color: var(--text);
+  border-color: var(--border);
+  font-weight: 500;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.turn {
+  margin-bottom: 22px;
+}
+.q {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.q .tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-left: 8px;
+}
+
+.steps {
+  margin: 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.step {
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+.step .name {
+  color: var(--text);
+  font-weight: 600;
+}
+.step .args {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+.step.done .name::before {
+  content: "✓ ";
+  color: var(--good);
+}
+.step.running .name::before {
+  content: "⏳ ";
+}
+
+.answer.empty {
+  color: var(--muted);
+}
+
+/* --- intro / examples --- */
+.intro {
+  margin-bottom: 8px;
+}
+.hint {
+  margin: 6px 0 12px;
+}
+.small {
+  font-size: 13px;
+}
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.examples-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  min-width: 120px;
+}
+.chip {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.chip:hover {
+  border-color: var(--accent);
+  filter: none;
+}
+
+/* --- rendered markdown answer --- */
+.markdown :first-child {
+  margin-top: 0;
+}
+.markdown :last-child {
+  margin-bottom: 0;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  margin: 18px 0 8px;
+  line-height: 1.3;
+}
+.markdown h1 {
+  font-size: 20px;
+}
+.markdown h2 {
+  font-size: 17px;
+}
+.markdown h3 {
+  font-size: 15px;
+}
+.markdown p {
+  margin: 8px 0;
+}
+.markdown ul,
+.markdown ol {
+  margin: 8px 0;
+  padding-left: 22px;
+}
+.markdown li {
+  margin: 3px 0;
+}
+.markdown strong {
+  color: #fff;
+}
+.markdown a {
+  color: var(--accent);
+}
+.markdown code {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1px 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+.markdown pre {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  overflow-x: auto;
+}
+.markdown pre code {
+  border: 0;
+  padding: 0;
+}
+.markdown blockquote {
+  margin: 10px 0;
+  padding: 4px 14px;
+  border-left: 3px solid var(--border);
+  color: var(--muted);
+}
+.markdown hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 16px 0;
+}
+.markdown table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  width: 100%;
+  font-size: 14px;
+}
+.markdown th,
+.markdown td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: left;
+}
+.markdown th {
+  background: var(--panel-2);
+  font-weight: 600;
+}
+
+.citations {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.citation {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: var(--panel-2);
+}
+.citation .meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.citation .num {
+  font-weight: 700;
+  color: var(--accent);
+}
+.citation .snippet {
+  font-size: 13px;
+  color: var(--text);
+  max-height: 84px;
+  overflow: hidden;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.composer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent, var(--bg) 24%);
+  padding: 20px;
+}
+.composer .inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+.composer textarea {
+  flex: 1;
+  resize: none;
+  min-height: 44px;
+  max-height: 140px;
+}
+.composer .filters {
+  display: flex;
+  gap: 6px;
+}
+.composer input.ticker {
+  width: 92px;
+}

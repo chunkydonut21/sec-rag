@@ -1,0 +1,51 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sec
+    ports:
+      # Host 5433 -> container 5432, to avoid clashing with a local Postgres on
+      # 5432. The app connects internally as db:5432 and is unaffected.
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sec"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/sec
+      SEC_USER_AGENT: ${SEC_USER_AGENT:?set SEC_USER_AGENT in .env}
+      VOYAGE_API_KEY: ${VOYAGE_API_KEY:?set VOYAGE_API_KEY in .env}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      EMBED_MODEL: ${EMBED_MODEL:-voyage-finance-2}
+      EMBED_DIM: ${EMBED_DIM:-1024}
+      RERANK_MODEL: ${RERANK_MODEL:-rerank-2.5}
+      LLM_MODEL: ${LLM_MODEL:-claude-sonnet-4-6}
+      JUDGE_MODEL: ${JUDGE_MODEL:-claude-haiku-4-5}
+    ports:
+      - "8000:8000"
+
+  web:
+    build:
+      context: ./web
+      args:
+        # Baked into the browser bundle. The browser talks to the host-exposed
+        # backend port, so this is localhost:8000 (not the internal app:8000).
+        NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-http://localhost:8000}
+    depends_on:
+      - app
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
